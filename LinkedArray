@@ -1,0 +1,74 @@
+import java.util.Iterator;
+
+public class LinkedArray implements Iterable {
+
+    private Node head;
+    private int count;
+
+    LinkedArray() {
+        head = new Node(0);
+        count = 0;
+    }
+
+    void add(Object value) {
+        Node end = new Node(value);
+        Node current = head;
+
+        while (current.nextNodeLink != null) {
+            current = current.nextNodeLink;
+        }
+        current.nextNodeLink = end;
+        count++;
+    }
+
+    Object get(int index) {
+
+        Node current = head;
+        int count = 0;
+        while (count < index && current.nextNodeLink != null) {
+            current = current.nextNodeLink;
+            count++;
+        }
+        if (count != index) {
+            return null;
+        } else {
+            return current.value;
+        }
+
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new Iterator() {
+            private Node lastReturned = head;
+            private Node next;
+            private int nextIndex;
+
+            @Override
+            public boolean hasNext() {
+                return nextIndex != count;
+            }
+
+            @Override
+            public Object next() {
+                System.out.println("Get head value");
+                System.out.println(head.value);
+                System.out.println("Is head null?");
+                System.out.println(head == null);
+                lastReturned = next;
+                next = next.nextNodeLink;
+                nextIndex++;
+                return lastReturned.value;
+            }
+        };
+    }
+
+    class Node {
+        Node nextNodeLink = null;
+        Object value;
+
+        Node(Object value) {
+            this.value = value;
+        }
+    }
+}
