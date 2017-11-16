@@ -1,0 +1,53 @@
+import java.util.Iterator;
+
+class LinkedSimpleSet<E> implements Iterable<E> {
+
+    private final Node<E> headNode;
+    private Node<E> currentNode;
+    private SimpleSet<E> values;
+
+    LinkedSimpleSet() {
+        headNode = new Node<>(null);
+        currentNode = headNode;
+        values = new SimpleSet<>();
+    }
+
+    void add(E value) {
+        for (int i = 0; i < values.size; i++) {
+            if (value.equals(values.container[i])) {
+                return;
+            }
+        }
+        currentNode.nextNode = new Node<>(value);
+        values.add(value);
+        currentNode = currentNode.nextNode;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            Node<E> currentNode = LinkedSimpleSet.this.headNode;
+
+            @Override
+            public boolean hasNext() {
+                return currentNode.nextNode != null;
+            }
+
+            @Override
+            public E next() {
+                currentNode = currentNode.nextNode;
+                return currentNode.value;
+            }
+        };
+    }
+
+    private class Node<T> {
+        Node<T> nextNode;
+        final T value;
+
+        Node(T value) {
+            this.value = value;
+            this.nextNode = null;
+        }
+    }
+}
