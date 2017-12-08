@@ -1,0 +1,3 @@
+luceneQuery = queryParser.parse(QUERY_SPLIT_PATTERN.splitAsStream(query).collect(Collectors.joining("~" + maxEdits + " +", "+", "~" + maxEdits + "*")));
+Сохранить инкрементный поиск
+private static final Pattern QUERY_SPLIT_PATTERN = Pattern.compile("\\s+");
